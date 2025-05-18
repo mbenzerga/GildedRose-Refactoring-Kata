@@ -1,16 +1,25 @@
 # -*- coding: utf-8 -*-
 
+
 class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
 
+    @staticmethod
+    def decrease_sell_in(item):
+        # decrease sell_in
+        if item.name != "Sulfuras, Hand of Ragnaros":
+            item.sell_in = item.sell_in - 1
+
     def update_quality(self):
         for item in self.items:
+            # decrease quality for normal items
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if item.quality > 0:
                     if item.name != "Sulfuras, Hand of Ragnaros":
                         item.quality = item.quality - 1
+            # increase quality for Aged Brie or Backstage passes
             else:
                 if item.quality < 50:
                     item.quality = item.quality + 1
@@ -21,8 +30,10 @@ class GildedRose(object):
                         if item.sell_in < 6:
                             if item.quality < 50:
                                 item.quality = item.quality + 1
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in = item.sell_in - 1
+
+            self.decrease_sell_in(item)
+
+            # decrease quality when sell_in is negative
             if item.sell_in < 0:
                 if item.name != "Aged Brie":
                     if item.name != "Backstage passes to a TAFKAL80ETC concert":
