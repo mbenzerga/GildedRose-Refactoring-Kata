@@ -94,3 +94,17 @@ def test_Aged_Brie_quality_increases_twice_as_fast_if_sell_in_is_negative():
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == -2
     assert items[0].quality == 14
+
+
+@pytest.mark.parametrize("sell_in, quality", [(1, 1), (3, 5), (8, 12), (17, 50)])
+def test_Sulfuras_quality_and_sell_in_remain_constant(sell_in, quality):
+    items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=sell_in, quality=quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Sulfuras, Hand of Ragnaros"
+    assert items[0].sell_in == sell_in
+    assert items[0].quality == quality
+    gilded_rose.update_quality()
+    assert items[0].name == "Sulfuras, Hand of Ragnaros"
+    assert items[0].sell_in == sell_in
+    assert items[0].quality == quality

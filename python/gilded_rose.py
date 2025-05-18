@@ -22,6 +22,10 @@ class GildedRose(object):
         # check if item is normal
         return item.name not in ["Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"]
 
+    def is_quality_increasing(self, item):
+        # check if item quality is increasing
+        return item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert"
+
     def decrease_quality_of_normal_item(self, item):
         if item.quality > 0:
             item.quality = item.quality - 1
@@ -32,7 +36,7 @@ class GildedRose(object):
             if self.is_normal(item):
                 self.decrease_quality_of_normal_item(item)
             # increase quality for Aged Brie or Backstage passes
-            else:
+            elif self.is_quality_increasing(item):
                 if item.quality < 50:
                     item.quality = item.quality + 1
                     if item.name == "Backstage passes to a TAFKAL80ETC concert":
