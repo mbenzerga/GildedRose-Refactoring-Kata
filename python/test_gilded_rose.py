@@ -81,3 +81,16 @@ def test_Aged_Brie_quality_does_not_exceed_50(sell_in):
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 50
+
+
+def test_Aged_Brie_quality_increases_twice_as_fast_if_sell_in_is_negative():
+    items = [Item(name="Aged Brie", sell_in=0, quality=10)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Aged Brie"
+    assert items[0].sell_in == -1
+    assert items[0].quality == 12
+    gilded_rose.update_quality()
+    assert items[0].name == "Aged Brie"
+    assert items[0].sell_in == -2
+    assert items[0].quality == 14
