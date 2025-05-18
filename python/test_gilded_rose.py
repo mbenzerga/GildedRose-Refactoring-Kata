@@ -20,3 +20,16 @@ def test_item_sell_in_and_quality_decrease_if_sell_in_is_positive(sell_in, quali
     assert items[0].name == "foo"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == quality - 1
+
+
+def test_item_quality_decreases_twice_as_fast_if_sell_in_is_negative():
+    items = [Item(name="foo", sell_in=0, quality=10)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "foo"
+    assert items[0].sell_in == -1
+    assert items[0].quality == 8
+    gilded_rose.update_quality()
+    assert items[0].name == "foo"
+    assert items[0].sell_in == -2
+    assert items[0].quality == 6
