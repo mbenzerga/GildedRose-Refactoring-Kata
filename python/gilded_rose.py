@@ -26,6 +26,9 @@ class GildedRose(object):
             self.increase_quality_of_Aged_Brie(item)
             self.increase_quality_of_Backstage_passes(item)
 
+            # double decrease quality for Conjured items
+            self.decrease_quality_of_Conjured(item)
+
             # decrease sell_in
             self.decrease_sell_in(item)
 
@@ -48,6 +51,10 @@ class GildedRose(object):
             else:
                 item.quality = 0
 
+    def decrease_quality_of_Conjured(self, item):
+        if item.name.startswith("Conjured") and item.quality > 0:
+            item.quality = item.quality - 2 - 2 * int(item.sell_in <= 0)
+
     @staticmethod
     def decrease_sell_in(item):
         # decrease sell_in
@@ -56,7 +63,10 @@ class GildedRose(object):
 
     def is_normal(self, item):
         # check if item is normal
-        return item.name not in ["Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"]
+        return (
+            item.name not in ["Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"]
+            and item.name.startswith("Conjured") is False
+        )
 
     def old_update_quality(self):
         for item in self.items:

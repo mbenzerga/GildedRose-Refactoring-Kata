@@ -146,3 +146,21 @@ def test_Backstage_passes_quality_drops_to_0_if_sell_in_is_less_than_0():
     assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
     assert items[0].sell_in == -1
     assert items[0].quality == 0
+
+
+@pytest.mark.parametrize("sell_in, quality", [(1, 5), (2, 12)])
+def test_Conjured_quality_decreases_twice_as_fast_as_normal_objects_if_sell_in_is_more_than_0(sell_in, quality):
+    items = [Item(name="Conjured Mana Cake", sell_in=sell_in, quality=quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == quality - 2
+
+
+@pytest.mark.parametrize("sell_in, quality", [(-1, 5), (0, 12)])
+def test_Conjured_quality_decreases_twice_as_fast_as_normal_objects_if_sell_in_is_less_than_0(sell_in, quality):
+    items = [Item(name="Conjured Mana Cake", sell_in=sell_in, quality=quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == quality - 4
