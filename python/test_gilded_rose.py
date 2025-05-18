@@ -55,3 +55,12 @@ def test_item_quality_does_not_exceed_50():
     items = [Item(name="foo", sell_in=0, quality=51)]
     with pytest.raises(ValueError):
         GildedRose(items)
+
+
+def test_Aged_Brie_quality_increases_if_quality_is_less_than_50():
+    items = [Item(name="Aged Brie", sell_in=10, quality=20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Aged Brie"
+    assert items[0].sell_in == 9
+    assert items[0].quality == 21
