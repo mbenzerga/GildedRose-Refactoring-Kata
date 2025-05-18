@@ -33,3 +33,13 @@ def test_item_quality_decreases_twice_as_fast_if_sell_in_is_negative():
     assert items[0].name == "foo"
     assert items[0].sell_in == -2
     assert items[0].quality == 6
+
+
+@pytest.mark.parametrize("sell_in", list(range(-2, 3)))
+def test_item_quality_remains_0_if_quality_is_0(sell_in):
+    items = [Item(name="foo", sell_in=sell_in, quality=0)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "foo"
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == 0
