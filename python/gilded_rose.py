@@ -9,6 +9,8 @@ class GildedRose(object):
         for item in self.items:
             if item.quality < 0:
                 raise ValueError("Quality cannot be negative")
+            if item.quality > 50:
+                raise ValueError("Quality cannot exceed 50")
 
     @staticmethod
     def decrease_sell_in(item):

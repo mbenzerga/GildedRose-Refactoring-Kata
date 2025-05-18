@@ -49,3 +49,9 @@ def test_error_if_quality_is_negative():
     items = [Item(name="foo", sell_in=0, quality=-1)]
     with pytest.raises(ValueError):
         GildedRose(items)
+
+
+def test_item_quality_does_not_exceed_50():
+    items = [Item(name="foo", sell_in=0, quality=51)]
+    with pytest.raises(ValueError):
+        GildedRose(items)

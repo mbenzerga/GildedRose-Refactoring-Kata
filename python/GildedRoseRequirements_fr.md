@@ -24,8 +24,8 @@ Attendez, ça devient intéressant :
 
 - Une fois que la date de péremption est passée, la qualité se dégrade deux fois plus rapidement.
 - La qualité (`quality`) d'un produit ne peut jamais être négative.
-- "Aged Brie" augmente sa qualité (`quality`) plus le temps passe.
 - La qualité d'un produit n'est jamais de plus de 50.
+- "Aged Brie" augmente sa qualité (`quality`) plus le temps passe.
 - "Sulfuras", étant un objet légendaire, n'a pas de date de péremption et ne perd jamais en qualité (`quality`)
 - "Backstage passes", comme le "Aged Brie", augmente sa qualité (`quality`) plus le temps passe (`sellIn`) ; La qualité augmente de 2 quand il reste 10 jours ou moins et de 3 quand il reste 5 jours ou moins, mais la qualité tombe à 0 après le concert.
 
