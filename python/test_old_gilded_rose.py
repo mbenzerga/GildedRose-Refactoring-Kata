@@ -127,3 +127,13 @@ def test_Backstage_passes_quality_increases_by_2_if_sell_in_is_between_10_and_6(
     assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 22
+
+
+@pytest.mark.parametrize("sell_in", list(range(1, 6)))
+def test_Backstage_passes_quality_increases_by_3_if_sell_in_is_between_5_and_1(sell_in):
+    items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=sell_in, quality=20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.old_update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == 23
