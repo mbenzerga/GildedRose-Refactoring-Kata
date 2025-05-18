@@ -137,3 +137,12 @@ def test_Backstage_passes_quality_increases_by_3_if_sell_in_is_between_5_and_1(s
     assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 23
+
+
+def test_Backstage_passes_quality_drops_to_0_if_sell_in_is_less_than_0():
+    items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=0, quality=20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == -1
+    assert items[0].quality == 0
