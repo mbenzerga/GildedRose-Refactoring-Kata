@@ -108,3 +108,22 @@ def test_Sulfuras_quality_and_sell_in_remain_constant(sell_in, quality):
     assert items[0].name == "Sulfuras, Hand of Ragnaros"
     assert items[0].sell_in == sell_in
     assert items[0].quality == quality
+
+
+def test_Backstage_passes_quality_increases_by_1_if_sell_in_is_greater_than_10():
+    items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=11, quality=20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.old_update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == 10
+    assert items[0].quality == 21
+
+
+@pytest.mark.parametrize("sell_in", list(range(6, 11)))
+def test_Backstage_passes_quality_increases_by_2_if_sell_in_is_between_10_and_6(sell_in):
+    items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=sell_in, quality=20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.old_update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == 22
