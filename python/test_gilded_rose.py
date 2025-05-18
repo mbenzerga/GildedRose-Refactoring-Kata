@@ -45,31 +45,39 @@ def test_item_quality_remains_0_if_quality_is_0(sell_in):
     assert items[0].quality == 0
 
 
-def test_error_if_quality_is_negative():
-    items = [Item(name="foo", sell_in=0, quality=-1)]
+@pytest.mark.parametrize(
+    "name", ["foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"]
+)
+def test_error_if_quality_is_negative(name):
+    items = [Item(name=name, sell_in=0, quality=-1)]
     with pytest.raises(ValueError):
         GildedRose(items)
 
 
-def test_item_quality_does_not_exceed_50():
-    items = [Item(name="foo", sell_in=0, quality=51)]
+@pytest.mark.parametrize(
+    "name", ["foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"]
+)
+def test_item_quality_does_not_exceed_50(name):
+    items = [Item(name=name, sell_in=0, quality=51)]
     with pytest.raises(ValueError):
         GildedRose(items)
 
 
-def test_Aged_Brie_quality_increases_if_quality_is_less_than_50():
-    items = [Item(name="Aged Brie", sell_in=10, quality=20)]
+@pytest.mark.parametrize("sell_in, quality", [(1, 1), (3, 5), (8, 12)])
+def test_Aged_Brie_quality_increases_if_quality_is_less_than_50(sell_in, quality):
+    items = [Item(name="Aged Brie", sell_in=sell_in, quality=quality)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
     assert items[0].name == "Aged Brie"
-    assert items[0].sell_in == 9
-    assert items[0].quality == 21
+    assert items[0].sell_in == sell_in - 1
+    assert items[0].quality == quality + 1
 
 
-def test_Aged_Brie_quality_does_not_exceed_50():
-    items = [Item(name="Aged Brie", sell_in=10, quality=50)]
+@pytest.mark.parametrize("sell_in", [-1, 0, 1, 5])
+def test_Aged_Brie_quality_does_not_exceed_50(sell_in):
+    items = [Item(name="Aged Brie", sell_in=sell_in, quality=50)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
     assert items[0].name == "Aged Brie"
-    assert items[0].sell_in == 9
+    assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 50
