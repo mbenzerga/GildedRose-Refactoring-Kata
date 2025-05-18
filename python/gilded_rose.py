@@ -6,6 +6,10 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
+        for item in self.items:
+            if item.quality < 0:
+                raise ValueError("Quality cannot be negative")
+
     @staticmethod
     def decrease_sell_in(item):
         # decrease sell_in

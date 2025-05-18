@@ -43,3 +43,9 @@ def test_item_quality_remains_0_if_quality_is_0(sell_in):
     assert items[0].name == "foo"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 0
+
+
+def test_error_if_quality_is_negative():
+    items = [Item(name="foo", sell_in=0, quality=-1)]
+    with pytest.raises(ValueError):
+        GildedRose(items)
