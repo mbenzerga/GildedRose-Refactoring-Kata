@@ -6,7 +6,7 @@ from gilded_rose import Item, GildedRose
 def test_item_sell_in_decreases_but_not_quality_if_sell_in_is_0():
     items = [Item(name="foo", sell_in=0, quality=0)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "foo"
     assert items[0].sell_in == -1
     assert items[0].quality == 0
@@ -16,7 +16,7 @@ def test_item_sell_in_decreases_but_not_quality_if_sell_in_is_0():
 def test_item_sell_in_and_quality_decrease_if_sell_in_is_positive(sell_in, quality):
     items = [Item(name="foo", sell_in=sell_in, quality=quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "foo"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == quality - 1
@@ -25,11 +25,11 @@ def test_item_sell_in_and_quality_decrease_if_sell_in_is_positive(sell_in, quali
 def test_item_quality_decreases_twice_as_fast_if_sell_in_is_negative():
     items = [Item(name="foo", sell_in=0, quality=10)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "foo"
     assert items[0].sell_in == -1
     assert items[0].quality == 8
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "foo"
     assert items[0].sell_in == -2
     assert items[0].quality == 6
@@ -39,7 +39,7 @@ def test_item_quality_decreases_twice_as_fast_if_sell_in_is_negative():
 def test_item_quality_remains_0_if_quality_is_0(sell_in):
     items = [Item(name="foo", sell_in=sell_in, quality=0)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "foo"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 0
@@ -67,7 +67,7 @@ def test_item_quality_does_not_exceed_50(name):
 def test_Aged_Brie_quality_increases_if_quality_is_less_than_50(sell_in, quality):
     items = [Item(name="Aged Brie", sell_in=sell_in, quality=quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == quality + 1
@@ -77,7 +77,7 @@ def test_Aged_Brie_quality_increases_if_quality_is_less_than_50(sell_in, quality
 def test_Aged_Brie_quality_does_not_exceed_50(sell_in):
     items = [Item(name="Aged Brie", sell_in=sell_in, quality=50)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == sell_in - 1
     assert items[0].quality == 50
@@ -86,11 +86,11 @@ def test_Aged_Brie_quality_does_not_exceed_50(sell_in):
 def test_Aged_Brie_quality_increases_twice_as_fast_if_sell_in_is_negative():
     items = [Item(name="Aged Brie", sell_in=0, quality=10)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == -1
     assert items[0].quality == 12
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Aged Brie"
     assert items[0].sell_in == -2
     assert items[0].quality == 14
@@ -100,11 +100,11 @@ def test_Aged_Brie_quality_increases_twice_as_fast_if_sell_in_is_negative():
 def test_Sulfuras_quality_and_sell_in_remain_constant(sell_in, quality):
     items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=sell_in, quality=quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Sulfuras, Hand of Ragnaros"
     assert items[0].sell_in == sell_in
     assert items[0].quality == quality
-    gilded_rose.update_quality()
+    gilded_rose.old_update_quality()
     assert items[0].name == "Sulfuras, Hand of Ragnaros"
     assert items[0].sell_in == sell_in
     assert items[0].quality == quality
